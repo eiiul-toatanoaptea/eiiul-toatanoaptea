@@ -1,0 +1,558 @@
+;*	**********************************************************************************************************************************************************************
+
+% ppy ~/.zprofile ~/.zshrc ~/.zlogout
+# printf "${HOME}/.zprofile\n"
+HOMEBREW_PREFIX="/opt/homebrew"; export HOMEBREW_PREFIX
+HOMEBREW_CELLAR="/opt/homebrew/Cellar"; export HOMEBREW_CELLAR
+HOMEBREW_REPOSITORY="/opt/homebrew"; export HOMEBREW_REPOSITORY
+fpath[1,0]="/opt/homebrew/share/zsh/site-functions"; export FPATH
+INFOPATH="/opt/homebrew/share/info"; export INFOPATH
+PATH="/Applications/Racket v9.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}"
+MANPATH="/Applications/Racket v9.3/man:/opt/homebrew/share/man:/usr/share/man"; export MANPATH
+CPATH="${HOME}/Developer/EiiulTN:/opt/homebrew/include"; export CPATH
+CC="clang"; export CC
+CFLAGS="-O2"; export CFLAGS
+LDFLAGS="-L${HOME}/Developer/EiiulTN -L/opt/homebrew/lib"; export LDFLAGS
+DYLD_LIBRARY_PATH="${HOME}/Developer/EiiulTN:/opt/homebrew/lib"; export DYLD_LIBRARY_PATH
+PYTHONPATH="${HOME}/Developer"; PYTHONDONTWRITEBYTECODE=\:; export PYTHONPATH PYTHONDONTWRITEBYTECODE
+if which python3; then PY3="$(which python3)"; export PY3; fi
+if which vim; then VISUAL="$(which vim)"; elif which vi; then VISUAL="$(which vi)"; fi; if [[ -s "${VISUAL}" ]]; then export VISUAL; fi
+TMPDIR="${HOME}/TemporaryDirectory"; export TMPDIR
+
+# ~/.zprofile
+# printf "${HOME}/.zshrc\n"
+cd ~/Developer/SwiftCLTool/Sources/SwiftCLTool; cd ~/Developer/Rubbish; printf "\x1b[H\x1b[2J~${PWD#${HOME}}\n"; export COLUMNS LINES; PS1='%# '
+set -o emacs
+umask 002
+unalias -a
+alias qu=alias
+alias lsi='ls -AFL1'
+alias lsl='ls -AFhl'
+alias lsx='ls -AFLx'
+alias pim="${PY3} -im EiiulTN.Pannyx"
+alias nst='function { local j k t; if [[ 0 < ${#} ]]; then for k in $*; do if [[ -r "${k}" ]]; then mv "${k}" "${TMPDIR}/${k##*/}"; fi; ${PY3} -m Rubbish.NewSourceFromTemplate "${k}"> "${k}"; printf "${k}\n"; done; fi; }'
+alias nsm='function { local j k t; if [[ 0 < ${#} ]]; then for k in $*; do if [[ -r "${k}" ]]; then mv "${k}" "${TMPDIR}/${k##*/}"; fi; ${PY3} -m Rubbish.NewSourceFromTemplate -m "${k}"> "${k}"; printf "${k}\n"; done; fi; }'
+alias ppy="printf 'from string import *\\nfrom sys import *\\nfor i in argv[1:]:\\n\\tfor j in open(i):\\n\\t\\tprint(j.rstrip().expandtabs(3))' |${PY3} -"
+alias py='function { local t; if [[ 0 < $# ]]; then if [[ -r "${1}.py" ]]; then t="${1}.py"; elif [[ -r "${1}" ]]; then t="${1}"; fi; if [[ -s "${t}" ]]; then shift; fi; fi; ${PY3} ${t} $*; }'
+alias rkt='function { local t; if [[ 0 < $# ]]; then if [[ -r "${1}.rkt" ]]; then t="${1}.rkt"; elif [[ -r "${1}" ]]; then t="${1}"; fi; if [[ -s "${t}" ]]; then shift; fi; fi; racket ${t} $*; }'
+alias cdd='function { local j k; if [[ ${#} < 1 ]]; then j="${PWD}"; else j=${1}; shift; fi; for k in ${j} ${*}; do if [[ "${k}" == "${k##${HOME}}" ]]; then printf "${k}\n"; elif [[ "${k}" == "${HOME}" ]]; then printf "~/\n"; else printf "~${k##${HOME}}\n"; fi; done; }'
+alias cdm='cd -'
+alias cdt='cd ${HOME}/Public/Toatanoaptea/memo; printf "~${PWD#${HOME}}\n"'
+alias cdz='cd ${HOME}/Public/Toatanoaptea/trash; printf "~${PWD#${HOME}}\n"'
+alias cdf='cd ${HOME}/Developer/ProbeFiles; printf "~${PWD#${HOME}}\n"'
+alias cdl='cd ${HOME}/Developer/EiiulTN; printf "~${PWD#${HOME}}\n"'
+alias cds='cd ${HOME}/Developer/Rubbish; printf "~${PWD#${HOME}}\n"'
+alias cdv='cd ${HOME}/Developer/Vocabulary; printf "~${PWD#${HOME}}\n"'
+alias cdi='cd ${HOME}/Developer/SwiftCLTAux/Sources/SwiftCLTAux/include; printf "~${PWD#${HOME}}\n"'
+alias cdj='cd ${HOME}/Developer/SwiftCLTAux/Sources/SwiftCLTAux; printf "~${PWD#${HOME}}\n"'
+alias cdp='cd ${HOME}/Developer/SwiftCLTLib/Sources/SwiftCLTLib; printf "~${PWD#${HOME}}\n"'
+alias cdq='cd ${HOME}/Developer/SwiftCLTool/Sources/SwiftCLTool/Resources; printf "~${PWD#${HOME}}\n"'
+alias cdr='cd ${HOME}/Developer/SwiftCLTool/Sources/SwiftCLTool; printf "~${PWD#${HOME}}\n"'
+
+alias cmr='function { local t; if [[ 0 < ${#} ]]; then t="Run_26${1}"; shift; make -rR -s --directory="${HOME}/Developer/EiiulTN" clean; make -rR -s clean; if make -rR -s ${t}; then "./${t}" ${*}; fi; fi; }'
+alias mkr='function { local t; if [[ 0 < ${#} ]]; then t="Rkt_26${1}"; shift; make -rR -s --directory="${HOME}/Developer/EiiulTN" clean; make -rR -s clean; if make -rR -s ${t}; then "./${t}" ${*}; fi; fi; }'
+alias mkc='make -rR -s clean'
+alias mcl='make -rR -s --directory="${HOME}/Developer/EiiulTN" clean; make -rR -s clean'
+
+alias swb='function { local t; if [[ 0 < ${#} ]]; then t="Run_26${1}"; shift; swift run SwiftCLTool "${t}" ${*}; fi; }'
+alias swr='function { local t; if [[ 0 < ${#} ]]; then t="Run_26${1}"; shift; swift run --skip-build SwiftCLTool "${t}" ${*}; fi; }'
+alias swc='swift package clean'
+
+# ~/.zshrc
+# printf "${HOME}/.zlogout\n"; sleep 2
+make -rR -s --directory="${HOME}/Developer/EiiulTN" clean; make -rR -s --directory="${HOME}/Developer/Rubbish" clean
+cd ~/Developer/SwiftCLTool/Sources/SwiftCLTool
+swift package clean
+
+#  ~/.zlogout
+% mkdir ~/TemporaryDirectory
+% mkdir -p ~/Documents/Refs
+% mkdir -p ~/Documents/Templates
+% mkdir -p ~/Public/Toatanoaptea/expo
+% mkdir -p ~/Public/Toatanoaptea/memo
+% mkdir -p ~/Public/Toatanoaptea/repo
+% mkdir -p ~/Developer/ProbeFiles
+% mkdir -p ~/Developer/EiiulTN
+% mkdir -p ~/Developer/Rubbish
+% mkdir -p ~/Developer/SwiftCLTAux
+% cd !$
+% swift package init --type empty
+% mkdir -p ~/Developer/SwiftCLTAux/Sources/SwiftCLTAux/include
+% mkdir -p ~/Developer/SwiftCLTLib
+% cd !$
+% swift package init --type library --disable-swift-testing
+% mkdir -p ~/Developer/SwiftCLTool
+% cd !$
+% swift package init --type executable --disable-swift-testing
+% mkdir -p ~/Developer/SwiftCLTool/Sources/SwiftCLTool/Resources
+% mkdir -p ~/Developer/SwiftUIApps
+% cd ~/Library/Racket/9.3
+% ln -s ~/Developer collects
+% cd ~
+% brew install sdl3
+% brew list
+% function { local q=${1}; shift; pkgconf --cflags "${q}"; pkgconf --libs "${q}"; } bdw-gc
+-I/opt/homebrew/Cellar/bdw-gc/8.2.12/include
+-L/opt/homebrew/Cellar/bdw-gc/8.2.12/lib -lgc
+% function { local q=${1}; shift; pkgconf --cflags "${q}"; pkgconf --libs "${q}"; } sdl3
+-L/opt/homebrew/lib -Wl,-rpath,/opt/homebrew/lib -lSDL3
+% cdl
+~/Developer/EiiulTN
+% ppy Pannyx.make Makefile
+SHELL=zsh
+
+.SUFFIXES : .c .o
+
+%.o : %.c
+      $(CC) -c $(CFLAGS) $<
+
+#  ~/Developer/EiiulTN/Pannyx.make
+include $(HOME)/Developer/EiiulTN/Pannyx.make
+
+libEiiulTN.dylib : Pannyx.o Trollop.o
+      $(CC) -dynamiclib -o $@ $?
+
+.PHONY clean :
+      @for k in Pannyx.o Trollop.o; do if [[ -r $$k ]]; then rm $$k; fi; done
+      @for k in libEiiulTN.dylib; do if [[ -r $$k ]]; then rm $$k; fi; done
+
+#  ~/Developer/EiiulTN/Makefile
+% cds
+~/Developer/Rubbish
+% ppy Makefile
+include $(HOME)/Developer/EiiulTN/Pannyx.make
+
+Run_26011 : Run_26011.o
+      @make -rR -s --directory="$(HOME)/Developer/EiiulTN" Pannyx.o Trollop.o
+      $(CC) -o $@ $(LDFLAGS) -lgc -lSDL3 $(HOME)/Developer/EiiulTN/Pannyx.o $(HOME)/Developer/EiiulTN/Trollop.o $<
+#     @make -rR -s --directory="$(HOME)/Developer/EiiulTN" libEiiulTN.dylib
+#     $(CC) -o $@ $(LDFLAGS) -lgc -lSDL3 -lEiiulTN $<
+
+Rkt_26011 : Rkt_26011.rkt
+      @make -rR -s --directory="$(HOME)/Developer/EiiulTN" libEiiulTN.dylib
+      raco exe -o $@ $<
+
+.PHONY clean :
+      @for k in Run_26011 Run_26011.o; do if [[ -r $$k ]]; then rm $$k; fi; done
+      @for k in Rkt_26011; do if [[ -r $$k ]]; then rm $$k; fi; done
+
+#  ~/Developer/Rubbish/Makefile
+% ppy NewSourceFromTemplate.py ~/Documents/Templates/*.rkt
+import os
+import os.path
+import re
+import sys
+import sysconfig
+
+if len(sys.argv) < 2:
+   raise SystemExit
+
+h = os.environ['HOME']
+r = h + "/Documents/Templates/"
+is_main = False
+i_argv = 1
+if sys.argv[i_argv] == "-m":
+   is_main = True
+   i_argv += 1
+
+while i_argv < len(sys.argv):
+   t = os.path.basename(sys.argv[i_argv]).split(".")
+   if 1 < len(t):
+      if t[0] != "":
+         f, e = ".".join(t[:-1]), "." + t[-1]
+      else:
+         f, e = "." + t[1], ""
+   else:
+      f, e = t[0], ""
+
+   if e == ".c":
+      if is_main:
+         b = "c_main"
+      #  d = b.upper()
+      #  c = f.upper()
+         for k in open(r + b + e):
+         #  print(k.rstrip().replace(d, c).replace(b, f))
+            print(k.rstrip().replace(b, f))
+
+      else:
+         b = "c_body"
+         d = b.upper()
+         c = f.upper()
+         for k in open(r + b + e):
+            print(k.rstrip().replace(d, c).replace(b, f))
+
+   elif e == ".m":
+      if is_main:
+         b = "objc_main"
+      #  d = b.upper()
+      #  c = f.upper()
+         for k in open(r + b + e):
+         #  print(k.rstrip().replace(d, c).replace(b, f))
+            print(k.rstrip().replace(b, f))
+
+      else:
+         b = "objc_body"
+         d = b.upper()
+         c = f.upper()
+         for k in open(r + b + e):
+            print(k.rstrip().replace(d, c).replace(b, f))
+
+   elif e == ".h":
+      b = "c_spec"
+      d = b.upper()
+      c = f.upper()
+      for k in open(r + b + e):
+         print(k.rstrip().replace(d, c).replace(b, f))
+
+   elif e == ".rkt" and is_main:
+   #  print("#!/usr/bin/racket")
+      b = "racket_script"
+      for k in open(r + b + e):
+         print(k.rstrip().replace(b, f))
+
+   elif e == ".rkt":
+      b = "racket_imple"
+      for k in open(r + b + e):
+         print(k.rstrip().replace(b, f))
+
+   elif e == ".swift":
+      if is_main:
+         b = "swift_main"
+      else:
+         b = "swift_imple"
+      for k in open(r + b + e):
+         print(k.rstrip().replace(b, f))
+
+   elif e == ".txt" or e == ".log":
+      b = "text_file"
+      for k in open(r + b + ".txt"):
+         print(k.rstrip().replace(b, f).replace(".txt", e))
+
+   elif e == ".php":
+      b = "php_file"
+      for k in open(r + b + e):
+         print(k.rstrip().replace(b, f))
+
+   else:
+      d = os.path.dirname(sys.argv[i_argv]).replace(h, "~")
+      print("\n\n;*\t" + d + f + e)
+
+   i_argv += 1
+
+# NewSourceFromTemplate.py
+#lang racket/base
+(provide
+   xxx
+)
+
+;(require EiiulTN/Pannyx
+;  ffi/unsafe
+;)
+
+;(define EiiulTN-dylib (ffi-lib "/Users/eiiul/Developer/EiiulTN/libEiiulTN" '(#f)))
+
+;(define xxx 'nil)
+
+;(set! xxx (get-ffi-obj 'xxx EiiulTN-dylib (_fun -> _void)))
+
+;* racket_imple.rkt
+#lang racket/base
+(require EiiulTN/Pannyx
+)
+
+
+((lambda ()
+      (newline)
+
+      (printf ";~n")
+
+      (newline)
+   )
+   ;
+)
+;* racket_script.rkt
+% cd ~/Library/Application\ Support/Sublime\ Text/Packages/User
+% ppy snippet.py Default\ \(OSX\).sublime-keymap Preferences.sublime-settings EiiulTnj\ \(dark\).sublime-color-scheme EiiulTnj\ \(light\).sublime-color-scheme
+import sublime
+import sublime_plugin
+
+import os.path
+import re
+import time
+
+class snippetCommand(sublime_plugin.TextCommand):
+   def run(self, edit):
+      t = os.path.basename(self.view.file_name()).split(".")
+      if 1 < len(t):
+         if t[0] != "":
+            f, e = ".".join(t[:-1]), "." + t[-1]
+         else:
+            f, e = "." + t[1], ""
+      else:
+         f, e = t[0], ""
+      s0 = self.view.line(self.view.sel()[0].begin())
+
+      if e == ".c" or e == ".m":
+         mr = re.search("^:[\t ]*$", self.view.substr(s0))  # : → proc
+         if mr:
+            s1 = " (void)"
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': "void ${0}" + s1 + ";\n" + "void\n" + "${0}" + s1 + "\n" + "{\n\n" + "\t;\n\n" + "\treturn;\n" + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?[\t ]*$", self.view.substr(s0))  # ? → if
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "if (${0}) {\n" + s1 + "\t;\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?:[\t ]*$", self.view.substr(s0))  # ?: → if, else
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "if (${0}) {\n" + s1 + "\t;\n" + s1 + "}\n" + s1 + "else {\n" + s1 + "\t;\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?\\?:[\t ]*$", self.view.substr(s0))  # ??: → if, elsif, else
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "if (${0}) {\n" + s1 + "\t;\n" + s1 + "}\n" + s1 + "else if () {\n" + s1 + "\t;\n" + s1 + "}\n" + s1 + "else {\n" + s1 + "\t;\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)@[\t ]*$", self.view.substr(s0))  # @ → loop
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "l = 0;\n" + s1 + "while (l < n${0}) {\n" + s1 + "\t;\n" + s1 + "\tl += 1;\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\|[\t ]*$", self.view.substr(s0))  # | → switch
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "switch (${0}) {\n" + s1 + "\t\n" + s1 + "\tcase :\n" + s1 + "\t\t;\n" + s1 + "\t\tbreak;\n\n" + s1 + "\tcase :\n" + s1 + "\t\t;\n" + s1 + "\t\tbreak;\n\n" + s1 + "\tdefault:\n" + s1 + "\t\t;\n" + s1 + "}"})
+            return None
+
+         pass
+
+      elif e == ".rkt":
+         mr = re.search("^([\t ]*):[\t ]*$", self.view.substr(s0))  # : → proc
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "(define (${0})\n\n" + s1 + "\t(void)\n" + s1 + ")"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?[\t ]*$", self.view.substr(s0))  # ? → if
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "(if… (${0}) (then\n" + s1 + "\t;\n" + s1 + "))"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?:[\t ]*$", self.view.substr(s0))  # ?: → if, else
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "(if… (${0}) (then\n" + s1 + "\t;\n" + s1 + ")\n" + s1 + "(else\n" + s1 + "\t;\n" + s1 + "))"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?\\?:[\t ]*$", self.view.substr(s0))  # ??: → if, elsif, else
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "(if… (${0}) (then\n" + s1 + "\t;\n" + s1 + ")\n" + s1 + "(elsif () (then\n" + s1 + "\t;\n" + s1 + ")\n" + s1 + "(else\n" + s1 + "\t;\n" + s1 + ")))"})
+            return None
+
+         pass
+
+      elif e == ".swift":
+         mr = re.search("^([\t ]*):[\t ]*$", self.view.substr(s0))  # : → proc
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "func ${0} () -> Void\n" + s1 + "{\n\n" + s1 + "\treturn\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?[\t ]*$", self.view.substr(s0))  # ? → if
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "if ${0} {\n" + s1 + "\t;\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?:[\t ]*$", self.view.substr(s0))  # ?: → if, else
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "if ${0} {\n" + s1 + "\t;\n" + s1 + "}\n" + s1 + "else {\n" + s1 + "\t;\n" + s1 + "}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\?\\?:[\t ]*$", self.view.substr(s0))  # ??: → if, elsif, else
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "if ${0} {\n" + s1 + "\t;\n" + s1 + "}\n" + s1 + "else if  {\n" + s1 + "\t;\n" + s1 + "}\n" + s1 + "else {\n" + s1 + "\t;\n" + s1 + "}"})
+            return None
+
+         pass
+
+      elif e == ".txt":
+         mr = re.search("^(.*)([aAeEiIoOuUyY])\\\\\\\\[\t ]*$", self.view.substr(s0))  # …\\ → …¯
+         if mr:
+            s1 = mr.group(1)
+            s2 = mr.group(2)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + s2 + "¯${0}"})
+            return None
+
+      elif e == ".php":
+         mr = re.search("^(.*) [\t ]*$", self.view.substr(s0))  # nbsp
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "&nbsp;${0}"})
+            return None
+
+         mr = re.search("^(.*)-[\t ]*$", self.view.substr(s0))  # non-breaking hyphen
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "&#8209;${0}"})
+            return None
+
+         mr = re.search("^([\t ]*)\\*[\t ]*$", self.view.substr(s0))  # here
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "<a href=\"https://www.pannyx.com/${0}\">&#8594;here</a>\n" + s1})
+            return None
+
+         mr = re.search("^(.*)\\.[\t ]*$", self.view.substr(s0))  # ellipsis
+         if mr:
+            s1 = mr.group(1)
+            self.view.replace(edit, s0, "")
+            self.view.run_command('insert_snippet', {'contents': s1 + "&#8230;${0}"})
+            return None
+
+         pass
+
+#  snippet.py
+[
+   { "keys": ["alt+space"], "command": "snippet" },
+   { "keys": ["super+up"], "command": "noop" },
+   { "keys": ["super+down"], "command": "noop" },
+]
+{
+   "color_scheme": "EiiulTnj (light).sublime-color-scheme",
+   "dark_color_scheme": "EiiulTnj (dark).sublime-color-scheme",
+   "light_color_scheme": "EiiulTnj (light).sublime-color-scheme",
+   "font_face": "Andale Mono",
+   "font_size": 22,
+   "auto_complete": false,
+   "auto_indent": false,
+   "auto_match_enabled": false,
+   "copy_with_empty_selection": false,
+   "detect_indentation": false,
+   "draw_centered": false,
+   "ensure_newline_at_eof_on_save": true,
+   "gutter": false,
+   "highlight_line": true,
+   "indent_subsequent_lines": true,
+   "line_numbers": false,
+   "scroll_past_end": false,
+   "shift_tab_unindent": true,
+   "show_definitions": false,
+   "show_tab_close_buttons": false,
+   "tab_completion": false,
+   "tab_size": 3,
+   "translate_tabs_to_spaces": false,
+   "trim_trailing_white_space_on_save": true,
+   "use_tab_stops": true,
+   "word_wrap": false,
+   "wrap_width": 169,
+   "update_check": true,
+   "theme": "auto"
+}
+{
+   "name": "EiiulTnj (dark)",
+   "author": "Eiiul Toatănoaptea",  // (c) www. toatanoaptea .ro /?copyright_notice
+   "variables":
+   {
+      "black":                 "rgb( 11,  13,  31)",  // #0b0d1f 236  63 12 ;
+      "dimmed_black":          "rgb( 12,  14,  33)",  // #0c0e21 236  63 13 ;
+      "shadow_sepia":          "rgb( 31,  29,  21)",  // #1f1d15  47  30 12 ;
+      "dark_grey":             "rgb( 54,  53,  51)",  // #363532  47   5 21 ;
+      "middle_grey":           "rgb( 73,  72,  69)",  // #494845  47   5 29 ;
+      "light_grey":            "rgb( 94,  93,  90)",  // #5e5d5a  47   5 37 ;
+      "dimmed_white":          "rgb(170, 172, 174)",  // #aaacae 210   2 68 ;
+      "white":                 "rgb(170, 174, 176)",  // #aaaeb0 204   3 69 ;
+                                                      //                    ;
+      "magenta":               "rgb(105,   0, 105)",  // #690069 300 100 41 ;
+      "red":                   "rgb(105,   0,   0)",  // #690000   0 100 41 ;
+      "orange":                "rgb(152,  56,   0)",  // #983800  22 100 60 ;
+      "yellow":                "rgb(134, 120,   0)",  // #867800  54 100 53 ;
+      "green":                 "rgb(  0, 120,   0)",  // #007800 120 100 47 ;
+      "cyan":                  "rgb(  0, 120, 120)",  // #007878 180 100 47 ;
+      "blue":                  "rgb(  6,  16, 120)",  // #061078 235  95 47 ;
+      "purple":                "rgb( 40,   0, 120)"   // #280078 260 100 47 ;
+   },
+   "globals":
+   {
+      "background": "var(dimmed_black)", "line_highlight": "var(black)", "foreground": "var(middle_grey)", "caret": "rgb(50, 51, 40)",
+      "selection": "var(shadow_sepia)", "selection_border": "var(dark_grey)", "selection_foreground": "var(cyan)",
+      "highlight": "var(middle_grey)", "find_highlight": "var(black)", "find_highlight_foreground": "var(light_grey)",
+      "brackets_options": "foreground", "brackets_foreground": "var(light_grey)", "bracket_contents_options": ""
+   },
+   "rules":
+   [
+      { "name": "String", "scope": "string.quoted.double - (punctuation.definition.string.begin, punctuation.definition.string.end)", "foreground": "var(middle_grey)" },
+      { "name": "Comment", "scope": "comment", "foreground": "var(dark_grey)", "font_style": "italic" },
+      { "name": "Invalid", "scope": "invalid", "foreground": "var(middle_grey)" }
+   // { "name": "", "scope": "", "foreground": "" }
+   ]
+}
+{
+   "name": "EiiulTnj (light)",
+   "author": "Eiiul Toatănoaptea",  // (c) www. toatanoaptea .ro /?copyright_notice
+   "variables":
+   {
+      "black":                 "rgb( 11,  13,  31)",  // #0b0d1f 236  63 12 ;
+      "dimmed_black":          "rgb( 12,  14,  33)",  // #0c0e21 236  63 13 ;
+      "shadow_sepia":          "rgb( 31,  29,  21)",  // #1f1d15  47  30 12 ;
+      "dark_grey":             "rgb( 54,  53,  51)",  // #363532  47   5 21 ;
+      "middle_grey":           "rgb( 73,  72,  69)",  // #494845  47   5 29 ;
+      "light_grey":            "rgb( 94,  93,  90)",  // #5e5d5a  47   5 37 ;
+      "dimmed_white":          "rgb(170, 172, 174)",  // #aaacae 210   2 68 ;
+      "white":                 "rgb(170, 174, 176)",  // #aaaeb0 204   3 69 ;
+                                                      //                    ;
+      "magenta":               "rgb(105,   0, 105)",  // #690069 300 100 41 ;
+      "red":                   "rgb(105,   0,   0)",  // #690000   0 100 41 ;
+      "orange":                "rgb(152,  56,   0)",  // #983800  22 100 60 ;
+      "yellow":                "rgb(134, 120,   0)",  // #867800  54 100 53 ;
+      "green":                 "rgb(  0, 120,   0)",  // #007800 120 100 47 ;
+      "cyan":                  "rgb(  0, 120, 120)",  // #007878 180 100 47 ;
+      "blue":                  "rgb(  6,  16, 120)",  // #061078 235  95 47 ;
+      "purple":                "rgb( 40,   0, 120)"   // #280078 260 100 47 ;
+   },
+   "globals":
+   {
+      "background": "var(dimmed_white)", "line_highlight": "var(white)", "foreground": "var(middle_grey)", "caret": "rgb(71, 79, 64)",
+      "selection": "var(shadow_sepia)", "selection_border": "var(orange)", "selection_foreground": "var(dimmed_white)",
+      "highlight": "var(shadow_sepia)", "find_highlight": "var(white)", "find_highlight_foreground": "var(shadow_sepia)",
+      "brackets_options": "foreground", "brackets_foreground": "var(shadow_sepia)", "bracket_contents_options": ""
+   },
+   "rules":
+   [
+      { "name": "String", "scope": "string.quoted.double - (punctuation.definition.string.begin, punctuation.definition.string.end)", "foreground": "var(middle_grey)" },
+      { "name": "Comment", "scope": "comment", "foreground": "var(light_grey)", "font_style": "italic" },
+      { "name": "Invalid", "scope": "invalid", "foreground": "var(middle_grey)" }
+   // { "name": "", "scope": "", "foreground": "" }
+   ]
+}
+%
+
+;*	**********************************************************************************************************************************************************************
+;*	z26_history.log
